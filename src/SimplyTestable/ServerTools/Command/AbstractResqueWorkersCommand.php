@@ -78,6 +78,8 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
                 $this->executeForWorkerSet($name, $workerSetDetails);
             }
         }
+        
+        return;
     }    
     
     abstract protected function executeForWorkerset($name, $workerSetDetails);   

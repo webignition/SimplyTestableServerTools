@@ -30,7 +30,9 @@ EOF
             }
             
             passthru($command);
-        }       
+        }
+        
+        return;
     }  
     
 

@@ -33,6 +33,8 @@ EOF
             foreach ($commandOutput as $outputLine) {
                 echo $outputLine . "\n";
             }
-        }      
+        }       
+        
+        return;
     }
 }
