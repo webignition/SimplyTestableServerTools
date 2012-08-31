@@ -38,6 +38,7 @@ EOF
     {
         
         $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";
+        echo $processIdCommand . "\n";
         
         $commandOutput = array();
         exec($processIdCommand, $commandOutput);
