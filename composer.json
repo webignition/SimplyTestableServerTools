@@ -1,0 +1,15 @@
+{
+    "name": "webignition/SimplyTestableServerTools",
+    "description": "Tools for making the managing of simplytestable.com production servers a spot easier",
+    "homepage": "https://github.com/webignition/SimplyTestableServerTools",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/console": "2.1.*@RC",
+        "symfony/process": "2.1.*@dev",
+        "symfony/finder": "2.1.*@RC"
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
+}
