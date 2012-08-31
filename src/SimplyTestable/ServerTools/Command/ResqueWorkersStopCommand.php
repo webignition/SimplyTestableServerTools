@@ -37,6 +37,12 @@ EOF
     }   
     
     
+    /**
+     * Get the process Ids for workers based on the command used to start them
+     * 
+     * @param string $workerStartCommand
+     * @return array 
+     */
     private function getWorkerProcessIds($workerStartCommand)
     {        
         $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";        
