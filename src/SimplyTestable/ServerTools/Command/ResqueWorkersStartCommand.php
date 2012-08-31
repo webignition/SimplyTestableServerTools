@@ -35,7 +35,9 @@ EOF
         $this->executeCommandAtPath(
             $workerSetDetails->path,
             $this->getStartCommand($name, $workerSetDetails->type). ' > ' . $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$workerSetDetails->type}->logpath
-        );         
+        );
+            
+        return;
     }
     
     
