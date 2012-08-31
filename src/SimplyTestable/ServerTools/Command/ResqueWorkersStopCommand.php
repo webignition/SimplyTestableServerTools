@@ -24,17 +24,20 @@ EOF
     
     protected function executeForWorkerset($name, $workerSetDetails) {
         $this->getOutput()->writeln('Stopping workers for: ' . $name);
-        var_dump($this->getWorkerProcessId($this->getStartCommand($name, $workerSetDetails->type)));
-
         
-//        $this->executeCommandAtPath(
-//            $workerSetDetails->path,
-//            $this->getStartCommand($workerSetDetails->type). ' > ' . $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$workerSetDetails->type}->logpath
-//        );         
+        $workerProcessIds = $this->getWorkerProcessIds($this->getStartCommand($name, $workerSetDetails->type));
+        foreach ($workerProcessIds as $workerProcessId) {
+            $commandOutput = array();
+            exec('kill -9 ' . $workerProcessId, $commandOutput);
+            
+            foreach ($commandOutput as $outputLine) {
+                echo $outputLine . "\n";
+            }
+        }      
     }   
     
     
-    private function getWorkerProcessId($workerStartCommand)
+    private function getWorkerProcessIds($workerStartCommand)
     {
         
         $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";
