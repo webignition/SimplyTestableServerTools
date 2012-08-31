@@ -38,11 +38,8 @@ EOF
     
     
     private function getWorkerProcessIds($workerStartCommand)
-    {
-        
-        $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";
-        echo $processIdCommand . "\n";
-        
+    {        
+        $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";        
         $commandOutput = array();
         exec($processIdCommand, $commandOutput);
         
