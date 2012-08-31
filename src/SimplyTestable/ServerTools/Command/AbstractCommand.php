@@ -67,8 +67,7 @@ abstract class AbstractCommand extends BaseCommand {
      * @param string $command 
      */
     protected function executeCommandAtPath($path, $command) {        
-        $fullCommand = 'cd ' . $path . ' && export SYMFONY_ENV=prod && ' . $command;
-        $this->getOutput()->writeln('Running command: ' . $fullCommand);        
+        $fullCommand = 'cd ' . $path . ' && export SYMFONY_ENV=prod && ' . $command;     
         exec($fullCommand . ' 2>&1 &');           
     }    
 }
