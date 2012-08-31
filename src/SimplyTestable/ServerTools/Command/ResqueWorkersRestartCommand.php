@@ -30,7 +30,7 @@ EOF
             }
             
             $commandOutput = array();
-            exec($command . ' 2>&1 &', $commandOutput);
+            exec($command . ' >/dev/null 2>&1 &', $commandOutput);
             
             foreach ($commandOutput as $outputLine) {
                 echo $outputLine . "\n";
