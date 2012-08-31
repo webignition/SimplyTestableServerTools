@@ -6,7 +6,7 @@ use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class Command extends BaseCommand {
+abstract class AbstractCommand extends BaseCommand {
     
     /**
      *
@@ -59,4 +59,16 @@ abstract class Command extends BaseCommand {
     {
         return $this->output;
     }
+    
+    /**
+     * Change to a directory and execute a command from there
+     * 
+     * @param string $path
+     * @param string $command 
+     */
+    protected function executeCommandAtPath($path, $command) {        
+        $fullCommand = 'cd ' . $path . ' && export SYMFONY_ENV=prod && ' . $command;
+        $this->getOutput()->writeln('Running command: ' . $fullCommand);        
+        exec($fullCommand . ' 2>&1 &');           
+    }    
 }

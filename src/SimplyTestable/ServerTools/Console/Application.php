@@ -47,13 +47,12 @@ class Application extends BaseApplication {
         ->name('*.php')              
         ->in(__DIR__ . '/../Command');
         
-        foreach ($iterator as $file) {     
-            if ($file->getFilename() != 'Command.php') {            
+        foreach ($iterator as $file) {
+            if (!preg_match('/^Abstract/', $file->getFilename())) {
                 $commandClassName = $this->getClassNameFromPath($file->getPathName());
                 $command = new $commandClassName;                
-                $defaultCommands[] = new $command;                
+                $defaultCommands[] = new $command;                    
             }
-
         }
         
         return $defaultCommands;
