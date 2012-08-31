@@ -11,7 +11,29 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Finder\Finder;
 
-class Application extends BaseApplication {    
+class Application extends BaseApplication {
+    
+    private $configurationPath;
+    
+    private $configuration;
+    
+    public function __construct($configurationPath) {
+        $this->configurationPath = $configurationPath;
+        parent::__construct();
+    }    
+    
+    /**
+     *
+     * @return \stdClass
+     */
+    public function getConfiguration() {
+        if (is_null($this->configuration)) {
+            $this->configuration = json_decode(file_get_contents($this->configurationPath));
+        }
+        
+        return $this->configuration;
+    }
+    
     
     protected function getDefaultCommands() {
         $defaultCommands = parent::getDefaultCommands();
@@ -28,7 +50,8 @@ class Application extends BaseApplication {
         foreach ($iterator as $file) {     
             if ($file->getFilename() != 'Command.php') {            
                 $commandClassName = $this->getClassNameFromPath($file->getPathName());
-                $defaultCommands[] = new $commandClassName;                
+                $command = new $commandClassName;                
+                $defaultCommands[] = new $command;                
             }
 
         }

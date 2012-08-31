@@ -1,0 +1,27 @@
+{
+    "resque-workers":{
+        "sets": {
+            "app": {
+                "type":"core-application",
+                "path":"~/www/app.simplytestable.com"
+
+            },
+            "hydrogen": {
+                "type":"worker",
+                "path":"~/www/hydrogen.worker.simplytestable.com"
+            }
+        },
+        "commands": {
+            "start":{
+                "core-application":"export SYMFONY_ENV=prod && php app/console resque:worker worker-activate-verify,task-cancel,job-prepare,job-mark-completed,task-assign --log verbose --forkCount 5 --daemon > app/logs/resque.log",
+                "worker":"export SYMFONY_ENV=prod && php app/console resque:worker task-cancel,task-report-completion,task-perform --log verbose --forkCount 3 --daemon > app/logs/resque.log"
+            },
+            "stop":{
+                
+            },
+            "restart":{
+                
+            }
+        }        
+    }        
+}

@@ -4,5 +4,5 @@ require_once  __DIR__ . '/../vendor/autoload.php';
 
 use SimplyTestable\ServerTools\Console\Application;
 
-$app = new Application();
+$app = new Application(__DIR__ . '/config.json');
 $app->run();
