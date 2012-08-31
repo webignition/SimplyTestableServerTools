@@ -6,33 +6,34 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ResqueWorkersStopCommand extends AbstractResqueWorkersCommand
+class ResqueWorkersListCommand extends AbstractResqueWorkersCommand
 {
     
     protected function configure()
     {
         $this
-            ->setName('resque:workers:stop')
-            ->setDescription('Stop resque task workers')
+            ->setName('resque:workers:list')
+            ->setDescription('List resque task workers')
             ->addOption('workerset', 'w', InputOption::VALUE_OPTIONAL, 'name of worker set')
             ->setHelp(<<<EOF
-Stop resque task workers
+List resque task workers
 EOF
         );
     }
-    
-    
+
     protected function executeForWorkerset($name, $workerSetDetails) {
-        $this->getOutput()->writeln('Stopping workers for: ' . $name);
+        $this->getOutput()->writeln('Listing workers for: ' . $name);                
         
         $workerProcessIds = $this->getWorkerProcessIds($this->getStartCommand($name, $workerSetDetails->type));
+        
         foreach ($workerProcessIds as $workerProcessId) {
             $commandOutput = array();
-            exec('kill -9 ' . $workerProcessId, $commandOutput);
+            exec('ps hf --pid '.$workerProcessId, $commandOutput);
             
             foreach ($commandOutput as $outputLine) {
                 echo $outputLine . "\n";
             }
-        }      
+        }       
     }
+    
 }

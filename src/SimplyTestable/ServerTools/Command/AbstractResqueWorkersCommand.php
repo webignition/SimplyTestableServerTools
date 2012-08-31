@@ -90,5 +90,20 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
      */
     protected function getStartCommand($name, $type) {
         return str_replace('{name}', $name, $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$type}->command);
+    }  
+    
+    /**
+     * Get the process Ids for workers based on the command used to start them
+     * 
+     * @param string $workerStartCommand
+     * @return array 
+     */
+    protected function getWorkerProcessIds($workerStartCommand)
+    {        
+        $processIdCommand = "ps -ef | grep \"".$workerStartCommand."\" | grep -v grep | awk '{print $2}'";        
+        $commandOutput = array();
+        exec($processIdCommand, $commandOutput);
+        
+        return $commandOutput;
     }    
 }
