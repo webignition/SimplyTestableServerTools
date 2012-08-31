@@ -29,6 +29,7 @@ EOF
             $this->getOutput()->writeln('There are already workers running for: ' . $name);
             $this->getOutput()->writeln('List them with: php app/console resque:workers:list --workerset ' . $name);
             $this->getOutput()->writeln('Stop them with: php app/console resque:workers:list --workerset ' . $name);
+            return;
         }
         
         $this->executeCommandAtPath(
