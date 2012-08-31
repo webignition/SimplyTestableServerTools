@@ -22,7 +22,15 @@ EOF
     }
 
     protected function executeForWorkerset($name, $workerSetDetails) {
-        $this->getOutput()->writeln('Starting workers for: ' . $name);                
+        $this->getOutput()->writeln('Starting workers for: ' . $name);
+        
+        $workerProcessIds = $this->getWorkerProcessIds($this->getStartCommand($name, $workerSetDetails->type));
+        if (count($workerProcessIds)) {
+            $this->getOutput()->writeln('There are already workers running for: ' . $name);
+            $this->getOutput()->writeln('List them with: php app/console resque:workers:list --workerset ' . $name);
+            $this->getOutput()->writeln('Stop them with: php app/console resque:workers:list --workerset ' . $name);
+        }
+        
         $this->executeCommandAtPath(
             $workerSetDetails->path,
             $this->getStartCommand($name, $workerSetDetails->type). ' > ' . $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$workerSetDetails->type}->logpath
