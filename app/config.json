@@ -13,7 +13,11 @@
             "lithium": {
                 "type":"worker",
                 "path":"~/www/lithium.worker.simplytestable.com"
-            }            
+            },
+            "helium": {
+                "type":"worker",
+                "path":"~/www/helium.worker.simplytestable.com"
+            }                 
         },
         "commands": {
             "start":{
