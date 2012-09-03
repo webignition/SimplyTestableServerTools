@@ -9,7 +9,11 @@
             "hydrogen": {
                 "type":"worker",
                 "path":"~/www/hydrogen.worker.simplytestable.com"
-            }
+            },
+            "lithium": {
+                "type":"worker",
+                "path":"~/www/lithium.worker.simplytestable.com"
+            }            
         },
         "commands": {
             "start":{
