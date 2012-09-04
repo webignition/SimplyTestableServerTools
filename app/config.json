@@ -17,7 +17,11 @@
             "helium": {
                 "type":"worker",
                 "path":"~/www/helium.worker.simplytestable.com"
-            }                 
+            },
+            "beryllium": {
+                "type":"worker",
+                "path":"~/www/beryllium.worker.simplytestable.com"
+            }             
         },
         "commands": {
             "start":{
