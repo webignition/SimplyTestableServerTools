@@ -4,7 +4,6 @@
             "app": {
                 "type":"core-application",
                 "path":"~/www/app.simplytestable.com"
-
             },            
             "hydrogen": {
                 "type":"worker",
