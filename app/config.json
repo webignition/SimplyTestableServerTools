@@ -25,7 +25,7 @@
         "commands": {
             "start":{
                 "core-application": {
-                    "command": "php app/console resque:worker {name},worker-activate-verify,task-cancel,job-prepare,task-assignment-selection,task-assign,job-mark-completed --log verbose --forkCount 20 --daemon",
+                    "command": "php app/console resque:worker {name},worker-activate-verify,task-cancel,job-prepare,job-mark-completed,task-assign,task-assignment-selection --interval 1 --log verbose --forkCount 20 --daemon",
                     "logpath": "app/logs/resque.log"
                 },               
                 "worker": {
