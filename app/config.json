@@ -6,7 +6,7 @@
                 "path":"~/www/app.simplytestable.com"
             },            
             "app-job-prepare": {
-                "type":"core-application-jobs",
+                "type":"core-application-job-prepare",
                 "path":"~/www/app.simplytestable.com"
             },  
             "app-task-assign": {
