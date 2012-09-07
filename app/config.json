@@ -14,7 +14,7 @@
                 "path":"~/www/app.simplytestable.com"
             },  
             "app-task-cancel": {
-                "type":"core-application",
+                "type":"core-application-task-cancel",
                 "path":"~/www/app.simplytestable.com"
             },             
             "hydrogen": {
