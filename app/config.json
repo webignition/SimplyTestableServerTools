@@ -12,12 +12,12 @@
 
             },
             "app-task-assign": {
-                "type":"core-application-tasks",
+                "type":"core-application-task-assign",
                 "path":"~/www/app.simplytestable.com"
 
             },            
             "app-task-cancel": {
-                "type":"core-application-tasks",
+                "type":"core-application-task-cancel",
                 "path":"~/www/app.simplytestable.com"
 
             },             
