@@ -103,7 +103,6 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
     protected function getWorkerProcessIds($workerStartCommand)
     {               
         $processIdCommand = "ps -ef | grep \"".preg_quote($workerStartCommand)."\" | grep -v grep | awk '{print $2}'";        
-        echo $processIdCommand . "\n";
         $commandOutput = array();
         exec($processIdCommand, $commandOutput);
         
