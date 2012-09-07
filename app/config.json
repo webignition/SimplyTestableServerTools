@@ -1,10 +1,22 @@
 {
     "resque-workers":{
         "sets": {
-            "app": {
-                "type":"core-application",
+            "app-general": {
+                "type":"core-application-general",
                 "path":"~/www/app.simplytestable.com"
             },            
+            "app-jobs": {
+                "type":"core-application-jobs",
+                "path":"~/www/app.simplytestable.com"
+            },  
+            "app-task-assign": {
+                "type":"core-application-task-assign",
+                "path":"~/www/app.simplytestable.com"
+            },  
+            "app-task-cancel": {
+                "type":"core-application",
+                "path":"~/www/app.simplytestable.com"
+            },             
             "hydrogen": {
                 "type":"worker",
                 "path":"~/www/hydrogen.worker.simplytestable.com"
@@ -24,10 +36,22 @@
         },
         "commands": {
             "start":{
-                "core-application": {
-                    "command": "php app/console resque:worker {name},worker-activate-verify,task-cancel,job-prepare,job-mark-completed,task-assign,task-assignment-selection --interval 1 --log verbose --forkCount 20 --daemon",
-                    "logpath": "app/logs/resque.log"
-                },               
+                "core-application-general": {
+                    "command": "php app/console resque:worker {name},worker-activate-verify --log verbose --forkCount 1 --daemon --ignoreDaemonPidCheck true",
+                    "logpath": "app/logs/resque-general.log"
+                },                 
+                "core-application-jobs": {
+                    "command": "php app/console resque:worker {name},job-prepare,job-mark-completed --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "logpath": "app/logs/resque-jobs.log"
+                },
+                "core-application-task-assign": {
+                    "command": "php app/console resque:worker {name},task-assign,task-assignment-selection --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "logpath": "app/logs/resque-task-assign.log"
+                },                 
+                "core-application-task-cancel": {
+                    "command": "php app/console resque:worker {name},task-cancel --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "logpath": "app/logs/resque-task-cancel.log"
+                },              
                 "worker": {
                     "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log verbose --forkCount 3 --daemon",
                     "logpath": "app/logs/resque.log"
