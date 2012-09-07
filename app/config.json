@@ -5,7 +5,7 @@
                 "type":"core-application-general",
                 "path":"~/www/app.simplytestable.com"
             },            
-            "app-jobs": {
+            "app-job-prepare": {
                 "type":"core-application-jobs",
                 "path":"~/www/app.simplytestable.com"
             },  
@@ -40,8 +40,8 @@
                     "command": "php app/console resque:worker {name},worker-activate-verify --log verbose --forkCount 1 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-general.log"
                 },                 
-                "core-application-jobs": {
-                    "command": "php app/console resque:worker {name},job-prepare,job-mark-completed --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                "core-application-job-prepare": {
+                    "command": "php app/console resque:worker {name},job-prepare --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-jobs.log"
                 },
                 "core-application-task-assign": {
