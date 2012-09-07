@@ -1,26 +1,11 @@
 {
     "resque-workers":{
         "sets": {
-            "app-general": {
-                "type":"core-application-general",
+            "app": {
+                "type":"core-application",
                 "path":"~/www/app.simplytestable.com"
 
             },            
-            "app-jobs": {
-                "type":"core-application-jobs",
-                "path":"~/www/app.simplytestable.com"
-
-            },
-            "app-task-assign": {
-                "type":"core-application-task-assign",
-                "path":"~/www/app.simplytestable.com"
-
-            },            
-            "app-task-cancel": {
-                "type":"core-application-task-cancel",
-                "path":"~/www/app.simplytestable.com"
-
-            },             
             "hydrogen": {
                 "type":"worker",
                 "path":"~/www/hydrogen.worker.simplytestable.com"
@@ -40,22 +25,10 @@
         },
         "commands": {
             "start":{
-                "core-application-general": {
-                    "command": "php app/console resque:worker {name},worker-activate-verify --log verbose --forkCount 1 --daemon",
+                "core-application": {
+                    "command": "php app/console resque:worker {name},* --log verbose --forkCount 20 --daemon",
                     "logpath": "app/logs/resque.log"
-                },                 
-                "core-application-jobs": {
-                    "command": "php app/console resque:worker {name},job-prepare,job-mark-completed --log verbose --forkCount 5 --daemon",
-                    "logpath": "app/logs/resque.log"
-                },
-                "core-application-task-assign": {
-                    "command": "php app/console resque:worker {name},task-assignment-selection,task-assign --log verbose --forkCount 5 --daemon",
-                    "logpath": "app/logs/resque.log"
-                },                 
-                "core-application-task-cancel": {
-                    "command": "php app/console resque:worker {name},task-cancel --log verbose --forkCount 5 --daemon",
-                    "logpath": "app/logs/resque.log"
-                },                
+                },               
                 "worker": {
                     "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log verbose --forkCount 3 --daemon",
                     "logpath": "app/logs/resque.log"
