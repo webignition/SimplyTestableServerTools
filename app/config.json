@@ -16,7 +16,11 @@
             "app-task-cancel": {
                 "type":"core-application-task-cancel",
                 "path":"~/www/app.simplytestable.com"
-            },             
+            },            
+            "gears-autopilot": {
+                "type":"gears-autopilot",
+                "path":"~/www/gears.simplytestable.com"
+            },            
             "hydrogen": {
                 "type":"worker",
                 "path":"~/www/hydrogen.worker.simplytestable.com"
@@ -54,6 +58,10 @@
                 },              
                 "worker": {
                     "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log verbose --forkCount 3 --daemon",
+                    "logpath": "app/logs/resque.log"
+                },              
+                "gears-autopilot": {
+                    "command": "php app/console resque:worker {name},job-start --log verbose --forkCount 3 interval 60 --daemon",
                     "logpath": "app/logs/resque.log"
                 }
             },
