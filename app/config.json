@@ -61,7 +61,7 @@
                     "logpath": "app/logs/resque.log"
                 },              
                 "gears-autopilot": {
-                    "command": "php app/console resque:worker {name},job-start --log verbose --forkCount 3 --interval 60 --daemon",
+                    "command": "php app/console resque:worker {name},job-start --log verbose --interval 60 --daemon",
                     "logpath": "app/logs/resque.log"
                 }
             },
