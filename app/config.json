@@ -41,27 +41,27 @@
         "commands": {
             "start":{
                 "core-application-general": {
-                    "command": "php app/console resque:worker {name},worker-activate-verify --log verbose --forkCount 1 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},worker-activate-verify --log normal --forkCount 1 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-general.log"
                 },                 
                 "core-application-job-prepare": {
-                    "command": "php app/console resque:worker {name},job-prepare --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},job-prepare --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-jobs.log"
                 },
                 "core-application-task-assign": {
-                    "command": "php app/console resque:worker {name},task-assign,task-assignment-selection --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},task-assign,task-assignment-selection --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-task-assign.log"
                 },                 
                 "core-application-task-cancel": {
-                    "command": "php app/console resque:worker {name},task-cancel --log verbose --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},task-cancel --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-task-cancel.log"
                 },              
                 "worker": {
-                    "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log verbose --forkCount 3 --daemon",
+                    "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log normal --forkCount 3 --daemon",
                     "logpath": "app/logs/resque.log"
                 },              
                 "gears-autopilot": {
-                    "command": "php app/console resque:worker {name},job-start --log verbose --interval 60 --daemon",
+                    "command": "php app/console resque:worker {name},job-start --log normal --interval 60 --daemon",
                     "logpath": "app/logs/resque.log"
                 }
             },
