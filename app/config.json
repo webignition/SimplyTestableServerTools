@@ -45,7 +45,7 @@
                     "logpath": "app/logs/resque-general.log"
                 },                 
                 "core-application-job-prepare": {
-                    "command": "php app/console resque:worker {name},job-prepare --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},job-prepare --log normal --forkCount 10 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-jobs.log"
                 },
                 "core-application-task-assign": {
