@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ResqueRestartJobPreparation extends AbstractResqueWorkersCommand
+class ResqueRestartJobPreparation extends AbstractCommand
 {
     
     protected function configure()
@@ -21,7 +21,7 @@ EOF
     }
     
     
-    protected function executeForWorkerset($name, $workerSetDetails) {
+    protected function execute() {
         $jobPreparationQueueLogName = '/home/simplytestable/www/app.simplytestable.com/app/logs/resque-jobs.log';
         
         $jobPreparationQueueLogSizeBefore = filesize($jobPreparationQueueLogName);
