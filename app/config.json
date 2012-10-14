@@ -36,7 +36,11 @@
             "beryllium": {
                 "type":"worker",
                 "path":"~/www/beryllium.worker.simplytestable.com"
-            }             
+            },
+            "boron": {
+                "type":"worker",
+                "path":"~/www/boron.worker.simplytestable.com"
+            }              
         },
         "commands": {
             "start":{
