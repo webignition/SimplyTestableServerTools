@@ -23,17 +23,24 @@ EOF
     
     protected function execute() {
         $jobPreparationQueueLogName = '/home/simplytestable/www/app.simplytestable.com/app/logs/resque-jobs.log';
+
+        $beforeOutput = array();
+        exec('wc -c < ' . $jobPreparationQueueLogName, $beforeOutput);
+        $jobPreparationQueueLogSizeBefore = (int)$beforeOutput[0];
         
-        $jobPreparationQueueLogSizeBefore = filesize($jobPreparationQueueLogName);
+        sleep(30);
+
+        $afterOutput = array();
+        exec('wc -c < ' . $jobPreparationQueueLogName, $afterOutput);
+        $jobPreparationQueueLogSizeAfter = (int)$afterOutput[0];
         
-        sleep(10);
-        
-        $jobPreparationQueueLogSizeAfter = filesize($jobPreparationQueueLogName);
-        
+        var_dump($beforeOutput, $afterOutput);
+
         if ($jobPreparationQueueLogSizeAfter - $jobPreparationQueueLogSizeBefore == 0) {
-            passthru('cd /home/simplytestable/www/tools && php app/console resque:workers:stop --workerset app-job-prepare');
+            exec('cd /home/simplytestable/www/tools && php app/console resque:workers:stop --workerset app-job-prepare > /dev/null');
             sleep(5);
-            passthru('cd /home/simplytestable/www/tools && php app/console resque:workers:start --workerset app-job-prepare');
+            exec('cd /home/simplytestable/www/tools && php app/console resque:workers:start --workerset app-job-prepare > /dev/null');
         }
     }
+
 }
