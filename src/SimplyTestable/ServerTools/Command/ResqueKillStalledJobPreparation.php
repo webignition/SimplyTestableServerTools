@@ -24,47 +24,82 @@ EOF
     }
     
     
-    protected function execute() {
-        $this->getProcessIdsForThresholdExceedingJobs();
-        // "ps -ef | grep \"".preg_quote($workerStartCommand)."\" | grep -v grep | awk '{print $2}'"
-        // "ps -ef | grep \"php app/console\" | grep -v grep | awk '{print $2}'"
-        // ps -eo pid,etime,command
-        // "ps -eo pid,etime,command | grep \"php app/console\" | grep -v grep | awk '{print $2}'"
-        // "ps -eo pid,etime,command | grep "php app/console simplytestable:task:perform" | grep -v grep | awk '{print $2}'"
+    protected function execute(InputInterface $input, OutputInterface $output) {
+        $this->setInput($input);
+        $this->setOutput($output);
         
-//        $jobPreparationQueueLogName = '/home/simplytestable/www/app.simplytestable.com/app/logs/resque-jobs.log';
-//
-//        $beforeOutput = array();
-//        exec('wc -c < ' . $jobPreparationQueueLogName, $beforeOutput);
-//        $jobPreparationQueueLogSizeBefore = (int)$beforeOutput[0];
-//        
-//        sleep(30);
-//
-//        $afterOutput = array();
-//        exec('wc -c < ' . $jobPreparationQueueLogName, $afterOutput);
-//        $jobPreparationQueueLogSizeAfter = (int)$afterOutput[0];
-//        
-//        var_dump($beforeOutput, $afterOutput);
-//
-//        if ($jobPreparationQueueLogSizeAfter - $jobPreparationQueueLogSizeBefore == 0) {
-//            exec('cd /home/simplytestable/www/tools && php app/console resque:workers:stop --workerset app-job-prepare > /dev/null');
-//            sleep(5);
-//            exec('cd /home/simplytestable/www/tools && php app/console resque:workers:start --workerset app-job-prepare > /dev/null');
-//        }
-    } 
-    
-    // return $this->getInput()->getOption('workerset');
+        $processIdsToKill = $this->getProcessIdsForThresholdExceedingJobs();
+        
+        foreach ($processIdsToKill as $processIdToKill) {
+            exec('kill -9 '.$processIdToKill);
+        }
+    }
     
     
     private function getProcessIdsForThresholdExceedingJobs() {
-        $jobPrepareProcessIdsAndTimesCommand = "ps -eo pid,etime,command | grep \"php app/console simplytestable:task:perform\" | grep -v grep | awk '{print $1,$2}'";        
+        $jobPrepareProcessIdsAndTimesCommand = "ps -eo pid,etime,command | grep \"php app/console simplytestable:job:prepare\" | grep -v grep | awk '{print $1,$2}'";        
         $output = array();
         
         exec($jobPrepareProcessIdsAndTimesCommand, $output);
         
-        var_dump($output);
-        exit();
+        $processesExeceedingDuration = array();
+        
+        foreach ($output as $outputLine) {
+            $outputLineValues = explode(' ', $outputLine);
+            $processId = (int)$outputLineValues[0];
+            $duration = $this->rawDurationToSeconds($outputLineValues[1]);
+            
+            if ($duration > $this->getDurationThreshold()) {
+                $processesExeceedingDuration[] = $processId;
+            }
+        }
+        
+        return $processesExeceedingDuration;
     }
+    
+    
+    /**
+     * 
+     * @param string $rawDuration Value from ps etime
+     * @return int
+     */
+    private function rawDurationToSeconds($rawDuration) {
+        if (substr_count($rawDuration, '-')) {
+            $dayValues = explode('-', $rawDuration);
+            $days = (int)$dayValues[0];
+            $hourMinuteDayValues = explode(':', $dayValues[1]);
+        } else {
+            $days = 0;
+            $hourMinuteDayValues = explode(':', $rawDuration);
+        }
+        
+        switch (count($hourMinuteDayValues)) {
+            case 3:
+                $hours = (int)$hourMinuteDayValues[0];
+                $minutes = (int)$hourMinuteDayValues[1];
+                $seconds = (int)$hourMinuteDayValues[2];
+                break;
+            
+            case 2:
+                $hours = 0;
+                $minutes = (int)$hourMinuteDayValues[0];
+                $seconds = (int)$hourMinuteDayValues[1];                
+                break;
+            
+            case 1:
+                $hours = 0;
+                $minutes = 0;
+                $seconds = (int)$hourMinuteDayValues[0];                
+                break;
+        }
+        
+        $secondsInDay = 86400;
+        $secondsInHour = 3600;
+        $secondsInMinute = 60;
+        
+        return ($days * $secondsInDay) + ($hours * $secondsInHour) + ($minutes * $secondsInMinute) + $seconds;
+    }
+    
     
     
     /**
