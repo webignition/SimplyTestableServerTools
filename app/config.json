@@ -61,7 +61,7 @@
                     "logpath": "app/logs/resque-task-cancel.log"
                 },              
                 "worker": {
-                    "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log normal --forkCount 4 --daemon",
+                    "command": "php app/console resque:worker {name},task-cancel,task-report-completion,task-perform --log none --forkCount 4 --daemon",
                     "logpath": "app/logs/resque.log"
                 },              
                 "gears-autopilot": {
