@@ -65,7 +65,7 @@
                     "logpath": "app/logs/resque.log"
                 },              
                 "gears": {
-                    "command": "php app/console resque:worker {name},email-list-subscribe --log normal --interval 60 --daemon",
+                    "command": "php app/console resque:worker {name},email-list-subscribe,email-list-unsubscribe --log normal --interval 60 --daemon",
                     "logpath": "app/logs/resque.log"
                 }
             },
