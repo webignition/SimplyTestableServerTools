@@ -21,7 +21,7 @@ EOF
     }
     
     
-    protected function execute() {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $jobPreparationQueueLogName = '/home/simplytestable/www/app.simplytestable.com/app/logs/resque-jobs.log';
 
         $beforeOutput = array();

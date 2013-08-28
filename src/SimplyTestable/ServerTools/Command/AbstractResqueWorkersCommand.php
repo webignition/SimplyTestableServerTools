@@ -8,6 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractResqueWorkersCommand extends AbstractCommand
 {
+    const RETURN_CODE_OK = 0;
+    const RETURN_CODE_INVALID_WORKER_SET = 1;
+    
     /**
      *
      * @return \stdClass
@@ -69,8 +72,8 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
         $this->setOutput($output);
         
         if (!$this->isWorkerSetOptionValid()) {
-            $output->writeln('workset "'.$this->getWorkersetOption().'" not valid, check app/config.json for valid options');
-            return false;
+            $output->writeln('workset "'.$this->getWorkersetOption().'" not valid, check aplication configuration for valid options');
+            return self::RETURN_CODE_INVALID_WORKER_SET;
         }
         
         foreach ($this->getWorkerSets() as $name => $workerSetDetails) {            
@@ -91,7 +94,11 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
      * @return string
      */
     protected function getStartCommand($name, $type) {
-        return str_replace('{name}', $name, $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$type}->command);
+        $nameReplacement = implode(',', array(
+            $this->getEnvironmentName() . '-' . $name            
+        ));
+        
+        return str_replace('{name}', $nameReplacement, $this->getApplication()->getConfiguration()->{'resque-workers'}->commands->start->{$type}->command);
     }  
     
     /**
@@ -107,5 +114,6 @@ abstract class AbstractResqueWorkersCommand extends AbstractCommand
         exec($processIdCommand, $commandOutput);
         
         return $commandOutput;
-    }    
+    }   
+
 }

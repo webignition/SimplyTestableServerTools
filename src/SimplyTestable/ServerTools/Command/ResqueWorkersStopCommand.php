@@ -19,6 +19,8 @@ class ResqueWorkersStopCommand extends AbstractResqueWorkersCommand
 Stop resque task workers
 EOF
         );
+        
+        parent::configure();        
     }
     
     

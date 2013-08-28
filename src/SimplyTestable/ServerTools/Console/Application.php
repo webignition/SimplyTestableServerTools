@@ -13,22 +13,40 @@ use Symfony\Component\Finder\Finder;
 
 class Application extends BaseApplication {
     
+    const CONFIGURATION_NOT_FOUND_EXECPTION_CODE = 404;
+    
     private $configurationPath;
     
     private $configuration;
     
-    public function __construct($configurationPath) {
+    private $environment;
+    
+    public function __construct($configurationPath) {        
         $this->configurationPath = $configurationPath;
         parent::__construct();
     }    
+    
+    
+    /**
+     * 
+     * @param string $environment
+     */
+    public function setEnvironment($environment) {
+        $this->environment = $environment;
+    }
     
     /**
      *
      * @return \stdClass
      */
     public function getConfiguration() {
+        $configFilePath = $this->configurationPath . '/config-'.$this->environment.'.json';
+        if (!file_exists($configFilePath)) {
+            throw new \SimplyTestable\ServerTools\Exception\ConfigurationException('Configuration file not found at "'.$configFilePath.'"', self::CONFIGURATION_NOT_FOUND_EXECPTION_CODE, $configFilePath);
+        }
+        
         if (is_null($this->configuration)) {
-            $this->configuration = json_decode(file_get_contents($this->configurationPath));
+            $this->configuration = json_decode(file_get_contents($configFilePath));
         }
         
         return $this->configuration;

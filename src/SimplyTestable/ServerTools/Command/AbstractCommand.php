@@ -5,8 +5,11 @@ namespace SimplyTestable\ServerTools\Command;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 abstract class AbstractCommand extends BaseCommand {
+    
+    const DEFAULT_ENVIRONMENT = 'dev';
     
     /**
      *
@@ -67,7 +70,36 @@ abstract class AbstractCommand extends BaseCommand {
      * @param string $command 
      */
     protected function executeCommandAtPath($path, $command) {        
-        $fullCommand = 'cd ' . $path . ' && export SYMFONY_ENV=prod && ' . $command;     
-        exec($fullCommand . ' 2>&1 &');           
-    }    
+        $fullCommand = 'cd ' . $path . ' && ' . $command;                    
+        $output = array();
+        
+        exec($fullCommand . ' 2>&1 &', $output);
+    }  
+    
+    protected function configure()
+    {
+        $this->addOption('environment', 'e', InputOption::VALUE_OPTIONAL, 'environment to use');
+    }  
+    
+    
+    /**
+     * 
+     * @return string
+     */
+    protected function getEnvironmentName() {
+        $environment = $this->getInput()->getOption('environment');
+        return (is_null($environment)) ? self::DEFAULT_ENVIRONMENT : $environment;        
+    } 
+    
+    
+    /**
+     * 
+     * @return \SimplyTestable\ServerTools\Console\Application
+     */
+    public function getApplication() {
+        $application = parent::getApplication();
+        $application->setEnvironment($this->getEnvironmentName());
+        
+        return $application;
+    }
 }

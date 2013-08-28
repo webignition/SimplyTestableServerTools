@@ -19,6 +19,8 @@ class ResqueWorkersListCommand extends AbstractResqueWorkersCommand
 List resque task workers
 EOF
         );
+        
+        parent::configure();        
     }
 
     protected function executeForWorkerset($name, $workerSetDetails) {
@@ -30,9 +32,11 @@ EOF
             $commandOutput = array();
             exec('ps hf --pid '.$workerProcessId, $commandOutput);
             
-            foreach ($commandOutput as $outputLine) {
-                echo $outputLine . "\n";
-            }
+            $this->getOutput()->write($commandOutput);
+//            
+//            foreach ($commandOutput as $outputLine) {
+//                echo $outputLine . "\n";
+//            }
         } 
         
         return;
