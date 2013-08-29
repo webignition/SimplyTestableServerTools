@@ -3,7 +3,6 @@
 namespace SimplyTestable\ServerTools\Tests\Command;
 
 use Symfony\Component\Console\Input\ArgvInput;
-//use Symfony\Component\Console\Application;
 use SimplyTestable\ServerTools\Console\Application;
 
 abstract class CommandTest extends \PHPUnit_Framework_TestCase {
@@ -14,7 +13,7 @@ abstract class CommandTest extends \PHPUnit_Framework_TestCase {
     
     /**
      *
-     * @var Symfony\Bundle\FrameworkBundle\Console\Application
+     * @var \SimplyTestable\ServerTools\Console\Application;
      */
     private $application;
     
