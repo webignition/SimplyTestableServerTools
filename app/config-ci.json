@@ -3,31 +3,31 @@
         "sets": {
             "app-general": {
                 "type":"core-application-general",
-                "path":"~/www/app.simplytestable.com"
+                "path":"/home/jon/www/app.simplytestable.com"
             },            
             "app-job-prepare": {
                 "type":"core-application-job-prepare",
-                "path":"~/www/app.simplytestable.com"
+                "path":"/home/jon/www/app.simplytestable.com"
             },  
             "app-task-assign": {
                 "type":"core-application-task-assign",
-                "path":"~/www/app.simplytestable.com"
+                "path":"/home/jon/www/app.simplytestable.com"
             },  
             "app-task-cancel": {
                 "type":"core-application-task-cancel",
-                "path":"~/www/app.simplytestable.com"
+                "path":"/home/jon/www/app.simplytestable.com"
             },            
             "gears": {
                 "type":"gears",
-                "path":"~/www/gears.simplytestable.com"
+                "path":"/home/jon/www/gears.simplytestable.com"
             },            
             "hydrogen": {
                 "type":"worker",
-                "path":"~/www/hydrogen.worker.simplytestable.com"
+                "path":"/home/jon/www/hydrogen.worker.simplytestable.com"
             },
             "lithium": {
                 "type":"worker",
-                "path":"~/www/lithium.worker.simplytestable.com"
+                "path":"/home/jon/www/lithium.worker.simplytestable.com"
             }             
         },
         "commands": {
