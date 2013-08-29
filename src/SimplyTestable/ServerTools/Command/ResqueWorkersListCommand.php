@@ -33,10 +33,7 @@ EOF
             exec('ps hf --pid '.$workerProcessId, $commandOutput);
             
             $this->getOutput()->write($commandOutput);
-//            
-//            foreach ($commandOutput as $outputLine) {
-//                echo $outputLine . "\n";
-//            }
+            $this->getOutput()->writeln("");
         } 
         
         return;

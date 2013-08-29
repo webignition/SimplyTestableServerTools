@@ -31,10 +31,6 @@ EOF
         foreach ($workerProcessIds as $workerProcessId) {
             $commandOutput = array();
             exec('kill -9 ' . $workerProcessId, $commandOutput);
-            
-            foreach ($commandOutput as $outputLine) {
-                echo $outputLine . "\n";
-            }
         }       
         
         return;

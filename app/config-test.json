@@ -3,19 +3,19 @@
         "sets": {
             "app-general": {
                 "type":"core-application-general",
-                "path":"~/www/local.app.simplytestable.com"
+                "path":"~/www/app.simplytestable.com"
             },            
             "app-job-prepare": {
                 "type":"core-application-job-prepare",
-                "path":"~/www/local.app.simplytestable.com"
+                "path":"~/www/app.simplytestable.com"
             },  
             "app-task-assign": {
                 "type":"core-application-task-assign",
-                "path":"~/www/local.app.simplytestable.com"
+                "path":"~/www/app.simplytestable.com"
             },  
             "app-task-cancel": {
                 "type":"core-application-task-cancel",
-                "path":"~/www/local.app.simplytestable.com"
+                "path":"~/www/app.simplytestable.com"
             },            
             "gears": {
                 "type":"gears",
@@ -23,25 +23,25 @@
             },            
             "hydrogen": {
                 "type":"worker",
-                "path":"~/www/dev.worker.simplytestable.com"
+                "path":"~/www/worker.simplytestable.com"
             }             
         },
         "commands": {
             "start":{
                 "core-application-general": {
-                    "command": "php app/console resque:worker {name},worker-activate-verify --log normal --forkCount 1 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},worker-activate-verify --log none --forkCount 1 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-general.log"
                 },                 
                 "core-application-job-prepare": {
-                    "command": "php app/console resque:worker {name},job-prepare --log verbose --forkCount 10 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},job-prepare --log none --forkCount 10 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-jobs.log"
                 },
                 "core-application-task-assign": {
-                    "command": "php app/console resque:worker {name},task-assign,task-assign-collection,task-assignment-selection --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},task-assign,task-assign-collection,task-assignment-selection --log none --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-task-assign.log"
                 },                 
                 "core-application-task-cancel": {
-                    "command": "php app/console resque:worker {name},task-cancel --log normal --forkCount 5 --daemon --ignoreDaemonPidCheck true",
+                    "command": "php app/console resque:worker {name},task-cancel --log none --forkCount 5 --daemon --ignoreDaemonPidCheck true",
                     "logpath": "app/logs/resque-task-cancel.log"
                 },              
                 "worker": {
@@ -49,7 +49,7 @@
                     "logpath": "app/logs/resque.log"
                 },              
                 "gears": {
-                    "command": "php app/console resque:worker {name},email-list-subscribe,email-list-unsubscribe --log normal --interval 60 --daemon",
+                    "command": "php app/console resque:worker {name},email-list-subscribe,email-list-unsubscribe --log none --interval 60 --daemon",
                     "logpath": "app/logs/resque.log"
                 }
             },
